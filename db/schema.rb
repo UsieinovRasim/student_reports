@@ -10,11 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_14_193907) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_14_202553) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "devise", force: :cascade do |t|
+  create_table "lab_reports", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "grade"
+    t.bigint "student_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["student_id"], name: "index_lab_reports_on_student_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "first_name", limit: 100
+    t.string "last_name", limit: 100
+    t.string "email", limit: 150
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -26,4 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_14_193907) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "lab_reports", "students"
 end
