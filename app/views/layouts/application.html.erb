@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>StudentReports</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+<head>
+  <title>LabRepots</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <%= javascript_importmap_tags %>
+</head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <div class="hidden md:flex items-center">
+    <% if current_user.present? %>
+      <div class="ml-auto mr-8">
+        <%= link_to 'Выйти', destroy_user_session_path, data: { "turbo-method": :delete }, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none" %>
+      </div>
+    <% else %>
+      <div class="ml-auto mr-28">
+        <%= link_to 'Войти', new_user_session_path, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none mr-2" %>
+        <%= link_to 'Зарегистрироваться', new_user_registration_path, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none mr-2" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="md:hidden" id="mobile-menu">
+  <% if current_user.present? %>
+    <div class="ml-auto mr-2">
+      <%= link_to 'Выйти', destroy_user_session_path, data: { "turbo-method": :delete }, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none" %>
+    </div>
+  <% else %>
+    <div class="ml-auto mr-2">
+      <%= link_to 'Войти', new_user_session_path, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none mr-2" %>
+      <%= link_to 'Зарегистрироваться', new_user_registration_path, class: "py-2 px-4 border border-gray-300 text-sm font-medium rounded-full text-black bg-gray-100 hover:bg-gray-200 focus:ring focus:ring-gray-400 focus:outline-none mr-2" %>
+    </div>
+  <% end %>
+</div>
+<main>
+  <div id="app" class="flex h-screen">
+    <%= render 'layouts/sidebar' %>
+
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6 bg-white border-b border-gray-200">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
     </main>
-  </body>
+  </div>
+</body>
 </html>
