@@ -1,5 +1,6 @@
-class Student < ApplicationRecord
+# frozen_string_literal: true
 
+class Student < ApplicationRecord
   has_many :lab_reports, dependent: :destroy
 
   validates :first_name, presence: true, length: { maximum: 100 }

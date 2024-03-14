@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LabReport < ApplicationRecord
   belongs_to :student
 
